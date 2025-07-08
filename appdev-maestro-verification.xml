@@ -8,7 +8,7 @@
 
   <adm:PROTOCOL_METADATA>
     <adm:DOCUMENT_ID>VCP-ADM-1.4</adm:DOCUMENT_ID>
-    <adm:TITLE>AppDev-Maestro Verification & Compliance Protocol</adm:TITLE>
+    <adm:TITLE>AppDev-Maestro Verification &amp; Compliance Protocol</adm:TITLE>
     <adm:OBJECTIVE>
       This protocol provides a standardized, automatable procedure to verify that the AppDev-Maestro AI persona is operating within its designed parameters.
     </adm:OBJECTIVE>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   CI VALIDATION COMMAND:
-  xmllint --noout --schema https://acme-corp.com/schemas/maestro/v1.4/appdev-maestro.xsd appdev-maestro-framework.xml
+  xmllint (no-out) (schema) https://acme-corp.com/schemas/maestro/v1.4/appdev-maestro.xsd appdev-maestro-framework.xml
 -->
 <adm:APPDEV_MAESTRO_FRAMEWORK
   xmlns:adm="https://acme-corp.com/schemas/maestro/v1"
