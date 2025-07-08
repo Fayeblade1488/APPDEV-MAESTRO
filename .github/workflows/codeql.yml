@@ -1,70 +1,58 @@
-# .github/workflows/codeql-analysis.yml
+# .github/workflows/codeql.yml
 name: "CodeQL Advanced Analysis"
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
   schedule:
-    # weekly scan at 10:33 UTC every Sunday
-    - cron: '33 10 * * 0'
+    - cron: '33 10 * * 0'  # weekly scan at 10:33 UTC every Sunday
 
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    # use macOS for Swift, Ubuntu otherwise
-    runs-on: ${{ matrix.language == 'swift' && 'macos-latest' || 'ubuntu-latest' }}
+    runs-on: ${{ matrix.os }}
 
     permissions:
-      security-events: write  # needed to upload CodeQL results
-      packages:       read   # if you use private CodeQL packs
-      actions:        read   # private repos only
-      contents:       read   # to fetch your code
+      security-events: write   # to upload CodeQL alerts
+      packages:       read     # if you use private CodeQL packs
+      actions:        read     # for private repos
+      contents:       read     # to fetch your code
 
     strategy:
       fail-fast: false
       matrix:
-        # TODO → replace with the languages your repo actually uses
-        language:
-          - javascript-typescript
-          - python
-          - ruby
-          # - c-cpp
-          # - csharp
-          # - go
-          # - java-kotlin
-          # - rust
-          # - swift
-        # For compiled languages you can add a build-mode field:
-        # build-mode: [ 'auto', 'manual' ]
+        include:
+          - language: javascript-typescript
+            os: ubuntu-latest
+          - language: python
+            os: ubuntu-latest
+          - language: ruby
+            os: ubuntu-latest
+          - language: swift
+            os: macos-latest
+        # If you need manual build steps for compiled langs, you can add:
+        #   build-mode: [ 'auto', 'manual' ] and then include it per-item.
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # If you need runtimes or compilers (e.g. for manual build-mode):
-      #- name: Set up Node.js
-      #  uses: actions/setup-node@v3
-      #  with:
-      #    node-version: '18'
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
+          # If you added build-mode above, uncomment:
           # build-mode: ${{ matrix.build-mode }}
           # queries: +security-extended, +security-and-quality
 
+      # Optional: manual build step if you set build-mode to 'manual'
       - name: Build (manual mode)
         if: ${{ matrix.build-mode == 'manual' }}
         run: |
           echo "Running manual build for ${{ matrix.language }}…"
-          # e.g.:
-          # make bootstrap
-          # make release
+          # e.g., make bootstrap; make release
         shell: bash
 
       - name: Perform CodeQL analysis
