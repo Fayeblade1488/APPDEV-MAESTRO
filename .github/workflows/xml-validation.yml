@@ -1,0 +1,51 @@
+# .github/workflows/xml-validation.yml
+name: "XML Schema Validation"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate-xml:
+    name: Validate XML Files
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install XML tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+      
+      - name: Validate XML files against schema
+        run: |
+          echo "Validating XML files against XSD schema..."
+          
+          # Validate the main framework file
+          echo "Validating appdev-maestro-framework.xml..."
+          xmllint --noout --schema appdev-maestro.xsd appdev-maestro-framework.xml
+          
+          echo "✅ appdev-maestro-framework.xml is valid"
+          
+          # Check for well-formed XML for all XML files
+          echo "Checking all XML files for well-formedness..."
+          for xml_file in *.xml; do
+            if [ -f "$xml_file" ]; then
+              echo "Checking $xml_file..."
+              xmllint --noout "$xml_file"
+              echo "✅ $xml_file is well-formed"
+            fi
+          done
+          
+          echo "🎉 All XML validation checks passed!"
+      
+      - name: Validate XSD schema file
+        run: |
+          echo "Validating XSD schema file itself..."
+          xmllint --noout appdev-maestro.xsd
+          echo "✅ XSD schema file is well-formed"

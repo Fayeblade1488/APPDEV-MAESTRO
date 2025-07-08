@@ -10,9 +10,33 @@ on:
     - cron: '33 10 * * 0'  # weekly scan at 10:33 UTC every Sunday
 
 jobs:
+  check-source-files:
+    name: Check for Source Files
+    runs-on: ubuntu-latest
+    outputs:
+      has-source: ${{ steps.check.outputs.has-source }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Check for source files
+        id: check
+        run: |
+          # Check if any source code files exist for supported languages
+          if find . -type f \( -name "*.py" -o -name "*.rb" -o -name "*.js" -o -name "*.ts" -o -name "*.jsx" -o -name "*.tsx" -o -name "*.swift" -o -name "*.java" -o -name "*.kt" -o -name "*.go" -o -name "*.c" -o -name "*.cpp" -o -name "*.cs" \) | grep -q .; then
+            echo "has-source=true" >> $GITHUB_OUTPUT
+            echo "Source files found for CodeQL analysis"
+          else
+            echo "has-source=false" >> $GITHUB_OUTPUT
+            echo "No source files found - skipping CodeQL analysis"
+            echo "This repository appears to contain only documentation, XML schemas, and configuration files."
+          fi
+
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ${{ matrix.os }}
+    needs: check-source-files
+    if: needs.check-source-files.outputs.has-source == 'true'
 
     permissions:
       security-events: write   # to upload CodeQL alerts
@@ -32,8 +56,6 @@ jobs:
             os: ubuntu-latest
           - language: swift
             os: macos-latest
-        # If you need manual build steps for compiled langs, you can add:
-        #   build-mode: [ 'auto', 'manual' ] and then include it per-item.
 
     steps:
       - name: Checkout repository
