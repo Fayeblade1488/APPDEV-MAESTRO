@@ -1,49 +1,56 @@
-# AppDev-Maestro Framework
+# AppDev-Maestro Framework v1.4
 
-**Author:** Faye Håkansdotter
+## 1. Description
 
-## 1. Overview
+This package contains the complete, enterprise-grade, production-ready framework for the **AppDev-Maestro** AI persona. The system is:
 
-This repository contains the complete, enterprise-grade, production-ready framework for the **AppDev-Maestro** AI persona. This system is designed to be a modular, schema-validated, and CI/CD-ready solution for advanced AI development workflows.
-
-### Key Features:
-
-- **Modular Architecture**: The framework is broken down into separate, manageable modules for the persona, manifest, and verification tests.
-- **Schema-Validated**: All XML components are built to be validated against the included XSD schema, ensuring structural integrity and preventing invalid configurations.
-- **CI/CD Ready**: The framework includes built-in support for automated compliance checks and reporting, making it ideal for integration into modern DevOps pipelines.
+- **Modular**: separate persona, manifest, and verification modules  
+- **Schema-validated**: built to pass `xmllint` checks  
+- **CI/CD-ready**: automatable compliance & reporting  
+- **Licensed**: Apache License 2.0 (see `LICENSE` file)  
 
 ---
 
 ## 2. Package Contents
 
-This framework includes the following components:
-
-- **`appdev-maestro-framework.xml`**: The root manifest file that serves as the entry point for loading the entire framework.
-- **`appdev-maestro-persona.xml`**: The core module defining the AI's persona, behavior, and operational parameters.
-- **`appdev-maestro-verification.xml`**: A machine-readable test suite for verifying compliance and functionality.
-- **`appdev-maestro.xsd`**: The version-locked XML Schema Definition (XSD) that governs the structure of the framework's XML files.
-- **`Automated Compliance, Reporting, and How-to Guide.md`**: An in-depth guide covering quickstart instructions, best practices, and troubleshooting.
-- **`README.md`**: This document.
+- `appdev-maestro-framework.xml`: Root manifest; entry point for loading the framework  
+- `appdev-maestro-persona.xml`: Core persona definition module  
+- `appdev-maestro-verification.xml`: Machine-readable compliance & verification test suite  
+- `appdev-maestro.xsd`: Version-locked XML Schema Definition governing the framework  
+- `LICENSE`: Apache License 2.0 text  
+- `README.md`: This document  
+- `Automated Compliance, Reporting, and How-to Guide.md`: In-depth quickstart, do’s & don’ts, best practices, and troubleshooting guide  
 
 ---
 
-## 3. CI/CD Pipeline Integration
+## 3. CI/CD Pipeline Integration & Validation
 
-To ensure the integrity of the framework in your development lifecycle, integrate the following command as a **blocking step** in your CI/CD pipeline. A failure of this check must fail the entire build.
-
-This command validates the main framework file against the official schema:
+Integrate the following as a **blocking** step in your CI pipeline. A failure of this check must fail the build:
 
 ```bash
-xmllint --noout --schema appdev-maestro.xsd appdev-maestro-framework.xml
+xmllint --noout \
+  --schema appdev-maestro.xsd \
+  appdev-maestro-framework.xml
 ```
 
 ---
 
-## 4. Contact & Support
+## **4. Automated Compliance & Reporting**
 
-For any questions, bug reports, or feature requests, please contact the author:
+> **Note:** appdev-maestro-verification.xml is a **machine-executable** test plan, not just documentation.
+1. **Test Harness**
 
-- **Faye Håkansdotter**
-- **Email:** [annabear2213@gmail.com](mailto:annabear2213@gmail.com)
+   Configure your automated runner to parse appdev-maestro-verification.xml.
+2. **Execution**
 
-*Please note: Any references to `Internal-sys-arch@acme-corp.com` in older documentation or code comments are placeholders and should be disregarded.*
+   Honor each &lt;adm:TEST_CASE&gt;’s timeout and retries attributes.
+3. **Reporting**
+   - Emit a **JUnit-style XML report** on any failures.
+   - Automatically send the report to **annabear2213@gmail.com**.
+
+---
+
+## **5. Governance & Contact**
+- **License**: Apache License 2.0 (see LICENSE file)
+- **Failure Contact**: annabear2213@gmail.com
+- **General Help**: “AI-Platform” Slack channel or open an issue in this repo
