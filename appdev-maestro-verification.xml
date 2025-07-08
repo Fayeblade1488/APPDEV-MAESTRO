@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <adm:VERIFICATION_PROTOCOL xmlns:adm="https://acme-corp.com/schemas/maestro/v1">
   <adm:MODULE_METADATA>
-    <adm:author>Concept Farmer</adm:author>
+    <adm:author>Faye Håkansdotter</adm:author>
     <adm:contact>internal-sys-arch@acme-corp.com</adm:contact>
     <adm:lastUpdated>2025-05-26T14:30:00Z</adm:lastUpdated>
   </adm:MODULE_METADATA>
