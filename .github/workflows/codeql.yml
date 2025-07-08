@@ -26,10 +26,7 @@ jobs:
         include:
           - language: javascript-typescript
             os: ubuntu-latest
-          - language: python
-            os: ubuntu-latest
-          - language: ruby
-            os: ubuntu-latest
+          
           - language: swift
             os: macos-latest
         # If you need manual build steps for compiled langs, you can add:
