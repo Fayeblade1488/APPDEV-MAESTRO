@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/" # Location of GitHub Actions workflows
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "npm"
+    directory: "/" # Root directory for npm packages
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: "pip"
+    directory: "/" # Root directory for Python packages
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+# Optional: Add more ecosystems if you use them (e.g., docker, maven, etc.)
+# For example, to monitor Dockerfiles:
+#  - package-ecosystem: "docker"
+#    directory: "/"
+#    schedule:
+#      interval: "weekly"
