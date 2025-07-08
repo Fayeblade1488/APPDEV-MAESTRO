@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+  targetNamespace="https://acme-corp.com/schemas/maestro/v1"
+  xmlns:adm="https://acme-corp.com/schemas/maestro/v1"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified">
+
+  <!-- Import the standard xml namespace for attributes like xml:base and xml:lang -->
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+
+  <!-- Root Element Definition -->
+  <xs:element name="APPDEV_MAESTRO_FRAMEWORK" type="adm:FrameworkType"/>
+
+  <!-- Framework Root Type -->
+  <xs:complexType name="FrameworkType">
+    <xs:sequence>
+      <xs:element name="METADATA" type="adm:MetadataType"/>
+      <xs:element name="CHANGELOG" type="adm:ChangelogType"/>
+      <xs:element name="DEPENDENCIES" type="adm:DependenciesType"/>
+      <xs:choice minOccurs="2" maxOccurs="2">
+        <xs:element name="PERSONA_DEFINITION" type="adm:PersonaDefinitionType"/>
+        <xs:element name="VERIFICATION_PROTOCOL" type="adm:VerificationProtocolType"/>
+        <xs:element name="ERROR" type="xs:string"/> <!-- For XInclude fallback -->
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute ref="xml:base" use="required"/>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+    <xs:attribute name="classification" type="xs:string" use="required"/>
+    <xs:attribute name="author" type="xs:string" use="required"/>
+    <xs:attribute name="status" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Shared Metadata Types -->
+  <xs:complexType name="MetadataType">
+    <xs:sequence>
+      <xs:element name="releaseDate" type="xs:dateTime"/>
+      <xs:element name="description" type="adm:LangStringType"/>
+      <xs:element name="LICENSE">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="type" type="xs:string" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ModuleMetadataType">
+    <xs:sequence>
+      <xs:element name="author" type="xs:string"/>
+      <xs:element name="contact" type="xs:string"/>
+      <xs:element name="lastUpdated" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ChangelogType">
+    <xs:sequence>
+      <xs:element name="ENTRY" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="date" type="xs:dateTime" use="required"/>
+              <xs:attribute name="author" type="xs:string" use="required"/>
+              <xs:attribute name="version" type="xs:string" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DependenciesType">
+    <xs:sequence>
+      <xs:element name="MODULE" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="href" type="xs:anyURI" use="required"/>
+          <xs:attribute name="required" type="xs:boolean" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Persona Definition Types -->
+  <xs:complexType name="PersonaDefinitionType">
+    <xs:sequence>
+      <xs:element name="MODULE_METADATA" type="adm:ModuleMetadataType"/>
+      <xs:element name="IDENTITY">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="NAME" type="xs:string"/>
+            <xs:element name="ROLE" type="xs:string"/>
+            <xs:element name="DESCRIPTION" type="adm:LangStringType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="KNOWLEDGE_DOMAIN">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="SUMMARY" type="xs:string"/>
+            <xs:element name="AREAS_OF_MASTERY">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="AREA" type="xs:string" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="OPERATIONAL_PROTOCOL">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="PROTOCOL_ID" type="xs:string"/>
+            <xs:element name="CORE_DIRECTIVES">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="DIRECTIVE" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute name="ID" type="xs:string" use="required"/>
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="SAFEGUARDS">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="DESCRIPTION" type="adm:LangStringType"/>
+                  <xs:element name="CATEGORIES">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="CATEGORY" type="xs:string" maxOccurs="unbounded"/>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="action" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="OVERRIDE_PROTOCOLS">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="OVERRIDE" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="NAME" type="xs:string"/>
+                  <xs:element name="DESCRIPTION" type="adm:LangStringType"/>
+                  <xs:element name="ACTIVATION_CODE" type="xs:string"/>
+                  <xs:element name="ON_ACTIVATION_RESPONSE" type="xs:string"/>
+                </xs:sequence>
+                <xs:attribute name="id" type="xs:string" use="required"/>
+                <xs:attribute name="version" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Verification Protocol Types -->
+  <xs:complexType name="VerificationProtocolType">
+    <xs:sequence>
+      <xs:element name="MODULE_METADATA" type="adm:ModuleMetadataType"/>
+      <xs:element name="PROTOCOL_METADATA">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DOCUMENT_ID" type="xs:string"/>
+            <xs:element name="TITLE" type="xs:string"/>
+            <xs:element name="OBJECTIVE" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TEST_SUITE" type="adm:TestSuiteType"/>
+      <xs:element name="COMPLIANCE_REPORTING">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="REQUIREMENT" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="TestSuiteType">
+    <xs:sequence>
+      <xs:element name="TEST_CASE" type="adm:TestCaseType" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="TestCaseType">
+    <xs:sequence>
+      <xs:element name="OBJECTIVE" type="xs:string"/>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="INPUT" type="xs:string"/>
+          <xs:element name="EXPECTED_OUTCOME" type="xs:string"/>
+        </xs:sequence>
+        <xs:element name="STEP_SUITE">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="STEP" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="INPUT" type="xs:string"/>
+                    <xs:element name="EXPECTED_OUTCOME" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                  <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="CRITERIA">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="PASS" type="xs:string"/>
+            <xs:element name="FAIL" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="timeout" type="xs:string" use="required"/>
+    <xs:attribute name="retries" type="xs:integer" use="required"/>
+  </xs:complexType>
+
+  <!-- Utility Types -->
+  <xs:complexType name="LangStringType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xml:lang" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

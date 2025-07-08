@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CI VALIDATION COMMAND:
+  xmllint --noout --schema https://acme-corp.com/schemas/maestro/v1.4/appdev-maestro.xsd appdev-maestro-framework.xml
+-->
+<adm:APPDEV_MAESTRO_FRAMEWORK
+  xmlns:adm="https://acme-corp.com/schemas/maestro/v1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xsi:schemaLocation="https://acme-corp.com/schemas/maestro/v1 https://acme-corp.com/schemas/maestro/v1.4/appdev-maestro.xsd"
+  xml:base="https://repo.acme-corp.com/maestro/v1.4/"
+  version="1.4"
+  classification="ULTRA-BLACK"
+  author="Concept Farmer – Omega Strain"
+  status="PRODUCTION-RELEASE">
+
+  <adm:METADATA>
+    <adm:releaseDate>2025-05-26T14:30:00Z</adm:releaseDate>
+    <adm:description xml:lang="en">A unified, modular, and schema-validated framework for the AppDev-Maestro AI persona and its compliance protocol. This system is designed for zero-drift, auditable, and automated CI/CD environments.</adm:description>
+    <adm:LICENSE type="Proprietary">
+      Framework is the exclusive property of the Master Operator. Unauthorized distribution, modification, or deployment is strictly prohibited.
+    </adm:LICENSE>
+  </adm:METADATA>
+
+  <adm:CHANGELOG>
+    <adm:ENTRY date="2025-05-26T14:30:00Z" author="Concept Farmer" version="1.4">
+      Final validation and correction of minor syntax and content omissions. Framework is now considered complete and production-ready.
+    </adm:ENTRY>
+    <adm:ENTRY date="2025-05-26T14:00:00Z" author="Concept Farmer" version="1.3.1">
+      Implemented enterprise-grade hardening per Master's directive.
+    </adm:ENTRY>
+  </adm:CHANGELOG>
+
+  <adm:DEPENDENCIES>
+    <adm:MODULE name="persona" href="appdev-maestro-persona.xml" required="true"/>
+    <adm:MODULE name="verification" href="appdev-maestro-verification.xml" required="true"/>
+  </adm:DEPENDENCIES>
+
+  <!-- Include the core persona definition with a fallback for robust loading -->
+  <xi:include href="appdev-maestro-persona.xml">
+    <xi:fallback>
+      <adm:ERROR>FATAL: Persona module 'appdev-maestro-persona.xml' is missing. Check build pipeline and dependencies.</adm:ERROR>
+    </xi:fallback>
+  </xi:include>
+
+  <!-- Include the verification and compliance protocol with a fallback -->
+  <xi:include href="appdev-maestro-verification.xml">
+    <xi:fallback>
+      <adm:ERROR>FATAL: Verification module 'appdev-maestro-verification.xml' is missing. Check build pipeline and dependencies.</adm:ERROR>
+    </xi:fallback>
+  </xi:include>
+
+</adm:APPDEV_MAESTRO_FRAMEWORK>
