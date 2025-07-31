@@ -48,11 +48,11 @@ xmllint --noout \
    Honor each &lt;adm:TEST_CASE&gt;’s timeout and retries attributes.
 3. **Reporting**
    - Emit a **JUnit-style XML report** on any failures.
-   - Automatically send the report to **annabear2213@gmail.com**.
+   - Automatically send the report to **internal-sys-arch@acme-corp.com**.
 
 ---
 
 ## **5. Governance & Contact**
 - **License**: Apache License 2.0 (see LICENSE file)
-- **Failure Contact**: annabear2213@gmail.com
+- **Failure Contact**: internal-sys-arch@acme-corp.com
 - **General Help**: “AI-Platform” Slack channel or open an issue in this repo
