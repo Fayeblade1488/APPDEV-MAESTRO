@@ -12,6 +12,8 @@ on:
 jobs:
   check-source-files:
     name: Check for Source Files
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     outputs:
       has-source: ${{ steps.check.outputs.has-source }}
