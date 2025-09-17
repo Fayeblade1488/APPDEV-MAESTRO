@@ -1,5 +1,7 @@
 # .github/workflows/xml-validation.yml
 name: "XML Schema Validation"
+permissions:
+  contents: read
 
 on:
   push:
