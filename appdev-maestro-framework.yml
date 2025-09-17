@@ -1,0 +1,80 @@
+---
+# Root element for the AppDev-Maestro framework.
+# This file serves as the main entry point and manifest, defining the
+# overall structure and including the other modules (persona and verification).
+adm:APPDEV_MAESTRO_FRAMEWORK:
+  # Author and classification metadata.
+  '@author': "Faye Håkansdotter"
+  '@classification': ULTRA-BLACK
+  '@status': PRODUCTION-RELEASE
+  '@version': '1.4'
+
+  # METADATA section: Contains high-level information about the framework.
+  adm:METADATA:
+    adm:releaseDate: '2025-05-26T14:30:00Z'
+    adm:description:
+      '@xml:lang': en
+      '#text': >
+        A unified, modular, and schema-validated framework for the
+        AppDev-Maestro AI persona and its compliance protocol. This system
+        is designed for zero-drift, auditable, and automated CI/CD
+        environments.
+    adm:LICENSE:
+      '@type': Apache-2.0
+      '#text': |
+        Apache License, Version 2.0, January 2004
+        http://www.apache.org/licenses/
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+
+  # CHANGELOG: A record of changes to the framework.
+  adm:CHANGELOG:
+    adm:ENTRY:
+      - '@author': "Faye Håkansdotter"
+        '@date': '2025-05-26T14:30:00Z'
+        '@version': '1.4'
+        '#text': >
+          Final validation and correction of minor syntax and content
+          omissions. Framework is now considered complete and production-ready.
+      - '@author': "Faye Håkansdotter"
+        '@date': '2025-05-26T14:00:00Z'
+        '@version': '1.3.1'
+        '#text': >
+          Implemented enterprise-grade hardening per Master's directive.
+
+  # DEPENDENCIES: Lists the modules required by this framework.
+  # These are logical dependencies and are used by tools that process this file.
+  adm:DEPENDENCIES:
+    adm:MODULE:
+      - '@href': appdev-maestro-persona.yml
+        '@name': persona
+        '@required': 'true'
+      - '@href': appdev-maestro-verification.yml
+        '@name': verification
+        '@required': 'true'
+
+  # Include directives: These are used to compose the final framework
+  # from separate files. The `xi:include` syntax is a remnant of the
+  # XML to YAML conversion. A YAML-native approach would use anchors
+  # or other mechanisms, but this structure is retained for now.
+  xi:include:
+    - '@href': appdev-maestro-persona.yml
+      'xi:fallback':
+        adm:ERROR: >
+          FATAL: Persona module 'appdev-maestro-persona.yml' is missing.
+          Check build pipeline and dependencies.
+    - '@href': appdev-maestro-verification.yml
+      'xi:fallback':
+        adm:ERROR: >
+          FATAL: Verification module 'appdev-maestro-verification.yml'
+          is missing. Check build pipeline and dependencies.
