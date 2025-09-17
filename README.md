@@ -7,7 +7,7 @@
 This package contains the complete, enterprise-grade, production-ready framework for the **AppDev-Maestro** AI persona. The system is:
 
 - **Modular**: separate persona, manifest, and verification modules  
-- **Schema-validated**: built to pass `yamllint` checks
+- **Schema-validated**: built to pass `xmllint` checks  
 - **CI/CD-ready**: automatable compliance & reporting  
 - **Licensed**: Apache License 2.0 (see `LICENSE` file)  
 
@@ -15,10 +15,10 @@ This package contains the complete, enterprise-grade, production-ready framework
 
 ## 2. Package Contents
 
-- `appdev-maestro-framework.yml`: Root manifest; entry point for loading the framework
-- `appdev-maestro-persona.yml`: Core persona definition module
-- `appdev-maestro-verification.yml`: Machine-readable compliance & verification test suite
-- `appdev-maestro.xsd`: Deprecated. XML Schema Definition, no longer used for validation.
+- `appdev-maestro-framework.xml`: Root manifest; entry point for loading the framework  
+- `appdev-maestro-persona.xml`: Core persona definition module  
+- `appdev-maestro-verification.xml`: Machine-readable compliance & verification test suite  
+- `appdev-maestro.xsd`: Version-locked XML Schema Definition governing the framework  
 - `LICENSE`: Apache License 2.0 text  
 - `README.md`: This document  
 - `Automated Compliance, Reporting, and How-to Guide.md`: In-depth quickstart, do’s & don’ts, best practices, and troubleshooting guide  
@@ -30,20 +30,22 @@ This package contains the complete, enterprise-grade, production-ready framework
 Integrate the following as a **blocking** step in your CI pipeline. A failure of this check must fail the build:
 
 ```bash
-yamllint .
+xmllint --noout \
+  --schema appdev-maestro.xsd \
+  appdev-maestro-framework.xml
 ```
 
 ---
 
 ## **4. Automated Compliance & Reporting**
 
-> **Note:** appdev-maestro-verification.yml is a **machine-executable** test plan, not just documentation.
+> **Note:** appdev-maestro-verification.xml is a **machine-executable** test plan, not just documentation.
 1. **Test Harness**
 
-   Configure your automated runner to parse appdev-maestro-verification.yml.
+   Configure your automated runner to parse appdev-maestro-verification.xml.
 2. **Execution**
 
-   Honor each test case's timeout and retries attributes.
+   Honor each &lt;adm:TEST_CASE&gt;’s timeout and retries attributes.
 3. **Reporting**
    - Emit a **JUnit-style XML report** on any failures.
    - Automatically send the report to **internal-sys-arch@acme-corp.com**.
