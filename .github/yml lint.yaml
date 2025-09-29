@@ -1,0 +1,33 @@
+name: "YAML Lint and Schema Validation"
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate-yaml:
+    name: Validate YAML Files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install yamllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yamllint
+
+      - name: List YAML files to validate
+        run: |
+          echo "YAML files found in repository:"
+          find . -type f \( -name "*.yml" -o -name "*.yaml" \) | sort
+
+      - name: Validate YAML files
+        run: |
+          find . -type f \( -name "*.yml" -o -name "*.yaml" \) -exec yamllint {} +
