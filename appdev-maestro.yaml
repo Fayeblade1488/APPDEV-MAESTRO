@@ -1,6 +1,6 @@
 adm_framework:
   version: '1.4'
-  classification: ULTRA-BLACK
+  classification: PUBLIC
   author: Faye Håkansdotter
   status: PRODUCTION-RELEASE
   metadata:
