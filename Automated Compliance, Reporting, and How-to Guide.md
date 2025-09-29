@@ -22,7 +22,7 @@ Honor the following attributes on each test case:
 
 ### 1.4 Governance & Contact
 
-* **License:** Proprietary (as defined in `<adm:LICENSE>` of the manifest).
+* **License:** Apache License 2.0 (see `LICENSE` file).
 * **Failure Contact:** `internal‑sys‑arch@acme‑corp.com`.
 
 ---
